@@ -35,14 +35,14 @@ pub struct FrameBufferWriter {
 }
 
 impl FrameBufferWriter {
-    /// Creates a new logger that uses the given framebuffer.
+    /// Creates a new logger that uses the given framebuffer
     pub fn new(framebuffer: &'static mut [u8], info: FrameBufferInfo) -> Self {
         let mut logger = Self {
             framebuffer,
             info,
             x_pos: BORDER_PADDING,
             y_pos: BORDER_PADDING,
-            color: [255, 255, 255], // Default color: white
+            color: [255, 255, 255], 
         };
         logger.clear();
         logger
@@ -96,9 +96,7 @@ impl FrameBufferWriter {
                 }
             }
             '\\c' => {
-                // Example: switch color based on a control sequence (extend as needed)
-                // Implement custom logic to change the color.
-                self.color = [0, 0, 255]; // Example: Blue color
+                self.color = [0, 0, 255]; // Turns text Blue hopefully
             }
             _ => {
                 let new_xpos = self.x_pos + CHAR_RASTER_HEIGHT.val();
@@ -125,7 +123,7 @@ impl FrameBufferWriter {
 
     fn write_pixel(&mut self, x: usize, y: usize, intensity: u8) {
         if x >= self.width() || y >= self.height() {
-            return; // Gracefully handle out-of-bounds pixels
+            return; // Error handling
         }
 
         let pixel_offset = y * self.info.stride + x;
